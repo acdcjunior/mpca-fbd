@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS `diarias`.`favorecido` ;
 
 CREATE TABLE IF NOT EXISTS `diarias`.`favorecido` (
   `codigo` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(300) NOT NULL,
+  `nome` VARCHAR(255) NOT NULL,
   `cpf` VARCHAR(11) NULL,
   PRIMARY KEY (`codigo`),
   UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
