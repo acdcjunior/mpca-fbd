@@ -14,7 +14,7 @@ function baixar(ano, mes, callback) {
     console.log(`Baixando ${caminhoCompletoArquivo}...`);
 
     let file = fs.createWriteStream(caminhoCompletoArquivo);
-    request.get(link).pipe(file).on('close', function () {
+    request.get(link).pipe(file).on('end', function () {
         console.log(`Download de ${caminhoCompletoArquivo} concluido!`);
         callback(caminhoCompletoArquivo);
     });
