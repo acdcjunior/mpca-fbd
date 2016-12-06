@@ -1,0 +1,14 @@
+{
+  "name": "node-etl",
+  "version": "1.0.0",
+  "description": "ETL do trabalho final de FBD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mysql": "^2.12.0"
+  }
+}
