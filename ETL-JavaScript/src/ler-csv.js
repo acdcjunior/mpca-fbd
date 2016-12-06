@@ -1,3 +1,5 @@
+"use strict";
+
 const readFile = require("./read-file");
 const path = require('path');
 const Diaria = require('./diaria');

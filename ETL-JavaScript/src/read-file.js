@@ -1,3 +1,5 @@
+"use strict";
+
 const iconvlite = require('iconv-lite');
 const fs = require('fs');
 

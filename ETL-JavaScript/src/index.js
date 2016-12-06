@@ -1,3 +1,5 @@
+"use strict";
+
 const lerCSV = require("./ler-csv");
 const dezipar = require('./dezipador');
 const baixar = require('./baixador');

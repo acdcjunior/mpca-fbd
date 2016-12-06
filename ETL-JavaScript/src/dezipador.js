@@ -1,3 +1,5 @@
+"use strict";
+
 const AdmZip = require('adm-zip');
 const path = require('path');
 
