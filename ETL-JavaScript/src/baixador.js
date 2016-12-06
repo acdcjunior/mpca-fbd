@@ -11,7 +11,7 @@ function baixar(ano, mes, callback) {
 
     let caminhoCompletoArquivo = path.resolve(__dirname, '..', 'dados', `${ano}${mesString}_Diarias.zip`);
 
-    console.log(`Baixando ${caminhoCompletoArquivo}...`);
+    console.log(`Baixando ${caminhoCompletoArquivo} de ${link}...`);
 
     let file = fs.createWriteStream(caminhoCompletoArquivo);
     const req = request.get(link);
