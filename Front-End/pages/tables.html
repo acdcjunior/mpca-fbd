@@ -83,23 +83,15 @@
                         </div>
                         <div class="panel-body">
                             <span id="info-resultado">Clique em 'Realizar Consulta' para obter os dados</span>
+                            <span id="info-buscando" style="display: none">Buscando...</span>
                             <table width="100%" class="table table-striped table-bordered table-hover" id="tabela-resultado" style="display: none">
                                 <thead>
                                     <tr>
-                                        <th>codigo</th>
-                                        <th>documento</th>
-                                        <th>gestao</th>
-                                        <th>dt_diaria</th>
-                                        <th>valor</th>
-                                        <th>favorecido</th>
-                                        <th>orgao_superior</th>
-                                        <th>orgao_subordinado</th>
-                                        <th>funcao</th>
-                                        <th>unidade_gestora</th>
-                                        <th>linguagem_cidada</th>
-                                        <th>acao</th>
-                                        <th>subfuncao</th>
-                                        <th>programa</th>
+                                        <th>Documento</th>
+                                        <th>Data da Diária</th>
+                                        <th>Valor (R$)</th>
+                                        <th>Nome do Favorecido</th>
+                                        <th>CPF do Favorecido</th>
                                     </tr>
                                 </thead>
                                 <tbody id="resultado-body"></tbody>
@@ -132,9 +124,18 @@
     <script>
     $(function() {
         var tabelaResultado = $('#tabela-resultado');
+        var infoResultado = $('#info-resultado');
+        var infoBuscando = $("#info-buscando");
         function ativarDataTable() {
-            $('#info-resultado').hide();
+            infoBuscando.hide();
+            if (tabelaResultado.destroy) {
+                console.log('sim! tem destroy');
+                tabelaResultado.destroy();
+            } else {
+                console.log('nao tem destroy');
+            }
             tabelaResultado.show().DataTable({
+                destroy: true,
                 responsive: true,
                 language: {
                     "sEmptyTable": "Nenhum registro encontrado",
@@ -147,7 +148,7 @@
                     "sLoadingRecords": "Carregando...",
                     "sProcessing": "Processando...",
                     "sZeroRecords": "Nenhum registro encontrado",
-                    "sSearch": "Filtrar",
+                    "sSearch": "Filtrar dentre os resultados",
                     "oPaginate": {
                         "sNext": "Próximo",
                         "sPrevious": "Anterior",
@@ -162,31 +163,28 @@
             });
         }
 
-        $("#realizar-consulta").click(function () {
+        function realizarConsulta() {
+            infoResultado.hide();
+            infoBuscando.show();
+            tabelaResultado.hide();
             var tbody = $("#resultado-body");
-            $.getJSON("http://mpca-fbd-acdcjunior.c9users.io:8081/diarias-por-favorecido?busca"+$("#busca").text(), function (diarias) {
+            $.getJSON("http://mpca-fbd-acdcjunior.c9users.io:8081/diarias-por-favorecido?busca="+$("#busca").val(), function (diarias) {
                 tbody.empty();
                 diarias.forEach(function (diaria) {
                     tbody.append(`<tr>
-                                    <th>${diaria.codigo}</th>
                                     <th>${diaria.documento}</th>
-                                    <th>${diaria.gestao}</th>
-                                    <th>${diaria.dt_diaria}</th>
-                                    <th>${diaria.valor}</th>
-                                    <th>${diaria.favorecido}</th>
-                                    <th>${diaria.orgao_superior}</th>
-                                    <th>${diaria.orgao_subordinado}</th>
-                                    <th>${diaria.funcao}</th>
-                                    <th>${diaria.unidade_gestora}</th>
-                                    <th>${diaria.linguagem_cidada}</th>
-                                    <th>${diaria.acao}</th>
-                                    <th>${diaria.subfuncao}</th>
-                                    <th>${diaria.programa}</th>
+                                    <th>${diaria.dt_diaria.replace('T00:00:00.000Z', '')}</th>
+                                    <th>${(diaria.valor+'').replace('.', ',').replace(/,\d$/, '$&0')}</th>
+                                    <th>${diaria.nome}</th>
+                                    <th>${diaria.cpf}</th>
                                  </tr>`);
                 });
                 ativarDataTable();
             });
-        });
+            return false;
+        }
+
+        $("#realizar-consulta").click(realizarConsulta).closest('form').submit(realizarConsulta);
     });
     </script>
 
