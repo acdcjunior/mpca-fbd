@@ -14,7 +14,7 @@ module.exports = {
   },
 
   diariasPorFavorecido: function(req, res) {
-    let valorBuscado = req.query.busca;
+    var valorBuscado = req.query.busca;
     Favorecido.query(`SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
     FROM diaria d INNER JOIN join favorecido f
     ON d.favorecido = f.codigo
