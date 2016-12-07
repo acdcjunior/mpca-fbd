@@ -44,12 +44,10 @@ function acessarBD() {
             let sp = "CALL inserir_diaria(" + parametros + ", @out_cod)";
             connection.query(sp, function (err, results, fields) {
                 if (err) {
-                    console.log("ERR veio!");
-                    throw new Error(err);
+                    console.log(`ERRO ao inserir documento ${diaria.doc}!`);
+                    console.error(err);
                 } else if (results.affectedRows == 0) {
                     console.log(`PROBLEMA com o documento ${diaria.doc}! AffectedRows: ${results.affectedRows}`);
-                } else {
-                    console.log(`INSERIDO o documento ${diaria.doc}!`);
                 }
             });
         }
