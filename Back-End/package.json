@@ -2,7 +2,7 @@
   "name": "Back-End",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "Back-End do trabalho final de FBD",
   "keywords": [],
   "dependencies": {
     "ejs": "2.3.4",
@@ -30,8 +30,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/Back-End.git"
+    "url": "git://github.com/acdcjunior/mpca-fbd.git"
   },
-  "author": "anonymous node/sails user",
-  "license": ""
+  "author": "grupo",
+  "license": "MIT"
 }

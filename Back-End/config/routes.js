@@ -32,6 +32,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  '/experimento': 'FavorecidoController.experimento',
   '/': {
     view: 'homepage'
   }
