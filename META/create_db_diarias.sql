@@ -99,7 +99,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `diarias`.`acao` ;
 
 CREATE TABLE IF NOT EXISTS `diarias`.`acao` (
-  `codigo` INT NOT NULL,
+  `codigo` VARCHAR(200) NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`codigo`),
   UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `diarias`.`diaria` (
   `funcao` INT NOT NULL,
   `unidade_gestora` INT NOT NULL,
   `linguagem_cidada` INT NOT NULL,
-  `acao` INT NOT NULL,
+  `acao` VARCHAR(200) NOT NULL,
   `subfuncao` INT NOT NULL,
   `programa` INT NOT NULL,
   PRIMARY KEY (`codigo`),
@@ -342,7 +342,7 @@ DROP procedure IF EXISTS `diarias`.`inserir_acao`;
 
 DELIMITER $$
 USE `diarias`$$
-CREATE PROCEDURE inserir_acao (IN cod INT, IN nm VARCHAR(200))
+CREATE PROCEDURE inserir_acao (IN cod VARCHAR(200), IN nm VARCHAR(200))
 BEGIN
 	declare cd INT;
 	SELECT codigo INTO cd FROM acao where codigo = cod;
@@ -409,7 +409,7 @@ CREATE PROCEDURE inserir_diaria (
     IN cd_funcao INT, IN nm_funcao VARCHAR(200),
     IN cd_subfuncao INT, IN nm_subfuncao VARCHAR(200),
     IN cd_prog INT, IN nm_prog VARCHAR(200),
-    IN cd_acao INT, IN nm_acao VARCHAR(200),
+    IN cd_acao VARCHAR(200), IN nm_acao VARCHAR(200),
     IN ling_cidada VARCHAR(200),
     IN cpf_fav VARCHAR(11), IN nm_fav VARCHAR(300), 
     IN doc VARCHAR(15), IN gestao VARCHAR(11), IN dt DATE, IN val DECIMAL(10,2), 
