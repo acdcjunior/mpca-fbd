@@ -21,6 +21,8 @@ module.exports = {
     WHERE
     f.nome LIKE '%$1%' or f.cpf LIKE '%$1%'`, [valorBuscado], function(err, results) {
       if (err) {
+        console.error("Erro na busca!");
+        console.error(err);
         res.send(400);
       }
       else {
