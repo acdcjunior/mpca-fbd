@@ -128,12 +128,6 @@
         var infoBuscando = $("#info-buscando");
         function ativarDataTable() {
             infoBuscando.hide();
-            if (tabelaResultado.destroy) {
-                console.log('sim! tem destroy');
-                tabelaResultado.destroy();
-            } else {
-                console.log('nao tem destroy');
-            }
             tabelaResultado.show().DataTable({
                 destroy: true,
                 responsive: true,
@@ -168,7 +162,7 @@
             infoBuscando.show();
             tabelaResultado.hide();
             var tbody = $("#resultado-body");
-            $.getJSON("http://mpca-fbd-acdcjunior.c9users.io:8081/diarias-por-favorecido?busca="+$("#busca").val(), function (diarias) {
+            $.getJSON("//mpca-fbd-acdcjunior.c9users.io:8081/diarias-por-favorecido?busca="+$("#busca").val(), function (diarias) {
                 tbody.empty();
                 diarias.forEach(function (diaria) {
                     tbody.append(`<tr>
