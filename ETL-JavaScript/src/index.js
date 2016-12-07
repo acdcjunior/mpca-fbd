@@ -11,9 +11,12 @@ const mes = 10;
 baixar(ano, mes, function (r) {
     dezipar(ano, mes);
     let diarias = lerCSV(ano, mes);
-    console.log(diarias);
+    // console.log(diarias);
 
-    // const bd = acessarBD();
-    // diarias.diarias.forEach(bd.inserirDiaria);
-    // bd.fecharConexao();
+    const bd = acessarBD();
+    // bd.inserirDiaria(diarias.diarias[0]);
+    console.log('Processando diarias...');
+    diarias.diarias.forEach(bd.inserirDiaria);
+    console.log('PRONTO!');
+    bd.fecharConexao();
 });

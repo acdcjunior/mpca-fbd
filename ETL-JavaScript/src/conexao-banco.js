@@ -41,18 +41,13 @@ function acessarBD() {
              ${convString(diaria.cpf_fav)}, ${convString(diaria.nm_fav)},
              ${convString(diaria.doc)}, ${convString(diaria.gestao)}, ${convData(diaria.dt)}, ${convDecimal(diaria.val)}`;
 
-            connection.query("CALL inserir_diaria(" + parametros + ")", function (err, results, fields) {
+            let sp = "CALL inserir_diaria(" + parametros + ", @out_cod)";
+            connection.query(sp, function (err, results, fields) {
                 if (err) {
                     console.log("ERR veio!");
                     throw new Error(err);
-                } else if (results[0].res === 0) {
-                    console.log("RESULT deu zero!");
-                    throw new Error("Erro! " + err + '-' + results);
-                } else {
-                    console.log("TUDO OK");
-                    console.log("ERR: ", err);
-                    console.log("RESULTS: ", results);
-                    console.log("FIELDS: ", fields);
+                } else if (results.affectedRows == 0) {
+                    console.log(`PROBLEMA com o documento ${diaria.doc}! AffectedRows: ${results.affectedRows}`);
                 }
             });
         }
@@ -67,6 +62,9 @@ function convString(campoString) {
     return `'${campoString}'`;
 }
 function convData(campoData) {
+    if (!campoData) {
+        return 'NULL';
+    }
     let partes = campoData.split('/');
     return `'${partes[2]}-${partes[1]}-${partes[0]}'`;
 }
