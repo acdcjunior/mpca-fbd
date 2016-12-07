@@ -11,6 +11,22 @@ module.exports = {
         res.send(results);
       }
     });
+  },
+
+  diariasPorFavorecido: function(req, res) {
+    let valorBuscado = req.query.busca;
+    Favorecido.query(`SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
+    FROM diaria d INNER JOIN join favorecido f
+    ON d.favorecido = f.codigo
+    WHERE
+    f.nome LIKE '%$1%' or f.cpf LIKE '%$1%'`, [valorBuscado], function(err, results) {
+      if (err) {
+        res.send(400);
+      }
+      else {
+        res.send(results);
+      }
+    });
   }
 
 };
