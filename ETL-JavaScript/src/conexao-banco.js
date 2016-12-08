@@ -41,7 +41,7 @@ function acessarBD() {
              ${convString(diaria.cpf_fav)}, ${convString(diaria.nm_fav)},
              ${convString(diaria.doc)}, ${convString(diaria.gestao)}, ${convData(diaria.dt)}, ${convDecimal(diaria.val)}`;
 
-            let sp = "CALL inserir_diaria(" + parametros + ", @out_cod)";
+            let sp = "CALL inserir_diaria(" + parametros + ")";
             connection.query(sp, function (err, results, fields) {
                 if (err) {
                     console.log(`ERRO ao inserir documento ${diaria.doc}!`);
