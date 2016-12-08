@@ -5,8 +5,8 @@ const dezipar = require('./dezipador');
 const baixar = require('./baixador');
 const acessarBD = require('./conexao-banco');
 
-const ano = 2016;
-const mes = 9;
+const ano = 2015;
+const mes = 1;
 
 baixar(ano, mes, function (r) {
     dezipar(ano, mes);
