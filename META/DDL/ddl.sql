@@ -73,14 +73,7 @@ DROP TABLE IF EXISTS `diarias`.`programa` ;
 CREATE TABLE IF NOT EXISTS `diarias`.`programa` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
-  `subfuncao` INT NOT NULL,
-  PRIMARY KEY (`codigo`),
-  INDEX `fk_subfuncao_idx` (`subfuncao` ASC),
-  CONSTRAINT `fk_subfuncao`
-    FOREIGN KEY (`subfuncao`)
-    REFERENCES `diarias`.`subfuncao` (`codigo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`codigo`))
 ENGINE = InnoDB;
 
 
@@ -94,11 +87,18 @@ CREATE TABLE IF NOT EXISTS `diarias`.`acao` (
   `nome` VARCHAR(200) NOT NULL,
   `linguagem_cidada` VARCHAR(200) NULL,
   `programa` INT NOT NULL,
+  `subfuncao` INT NOT NULL,
   PRIMARY KEY (`codigo`),
   INDEX `fk_programa_idx` (`programa` ASC),
+  INDEX `fk_subfuncao_idx` (`subfuncao` ASC),
   CONSTRAINT `fk_programa`
     FOREIGN KEY (`programa`)
     REFERENCES `diarias`.`programa` (`codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_subfuncao`
+    FOREIGN KEY (`subfuncao`)
+    REFERENCES `diarias`.`subfuncao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -318,12 +318,12 @@ DROP procedure IF EXISTS `diarias`.`inserir_acao`;
 
 DELIMITER $$
 USE `diarias`$$
-CREATE PROCEDURE inserir_acao (IN cod INT, IN nm VARCHAR(200), IN lng_cidada VARCHAR(200), IN cd_programa INT)
+CREATE PROCEDURE inserir_acao (IN cod INT, IN nm VARCHAR(200), IN lng_cidada VARCHAR(200), IN cd_programa INT, IN cd_subfuncao INT)
 BEGIN
 	declare cd INT;
 	SELECT codigo INTO cd FROM acao where codigo = cod;
     if cd is null then
-		insert into acao(codigo, nome, linguagem_cidada, programa) values (cod, nm, lng_cidada, cd_programa);
+		insert into acao(codigo, nome, linguagem_cidada, programa, subfuncao) values (cod, nm, lng_cidada, cd_programa, cd_subfuncao);
 	end if;
 END$$
 
@@ -338,12 +338,12 @@ DROP procedure IF EXISTS `diarias`.`inserir_programa`;
 
 DELIMITER $$
 USE `diarias`$$
-CREATE PROCEDURE inserir_programa (IN cod INT, IN nm VARCHAR(200), IN cd_subfuncao INT)
+CREATE PROCEDURE inserir_programa (IN cod INT, IN nm VARCHAR(200))
 BEGIN
 	declare cd INT;
 	SELECT codigo INTO cd FROM programa where codigo = cod;
     if cd is null then
-		insert into programa(codigo, nome, subfuncao) values (cod, nm, cd_subfuncao);
+		insert into programa(codigo, nome) values (cod, nm);
 	end if;
 END$$
 
@@ -439,7 +439,7 @@ from diaria d
     join orgao osup on osub.orgao_sup = osup.codigo
     join acao a on d.acao = a.codigo
     join programa p on a.programa = p.codigo
-    join subfuncao sf on p.subfuncao = sf.codigo
+    join subfuncao sf on a.subfuncao = sf.codigo
     join funcao fun on sf.funcao = fun.codigo
     ;
 USE `diarias`;
