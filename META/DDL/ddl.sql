@@ -451,7 +451,9 @@ DROP TRIGGER IF EXISTS `diarias`.`diaria_AFTER_INSERT` $$
 USE `diarias`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `diarias`.`diaria_AFTER_INSERT` AFTER INSERT ON `diaria` FOR EACH ROW
 BEGIN
-	insert into log(data, operacao) values (now(), concat('nova diária - código: ', new.documento));
+    if new.valor >= 500 then
+        insert into log(data, operacao) values (now(), concat('Nova diária de alto valor - documento: ', new.documento));
+	end if;
 END$$
 
 
