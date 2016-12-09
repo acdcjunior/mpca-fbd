@@ -15,6 +15,8 @@ function lerCSV(ano, mes) {
 
     const primeiraLinha = linhasComoString.shift();
 
+    linhasComoString.pop(); // remover linha sumario "Detalhamento das informações não disponível." + Total de valores
+
     return {
         cabecalho: separarColunas(primeiraLinha),
         diarias: linhasComoString.map(linhaString => new Diaria(linhaString))
