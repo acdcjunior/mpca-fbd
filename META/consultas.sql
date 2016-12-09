@@ -35,12 +35,3 @@ INNER JOIN join subfuncao sf ON sf.codigo = a.subfuncao
 INNER JOIN join funcao f ON f.codigo = sf.funcao
 GROUP BY f.nome
 HAVING sum(d.valor) >= <<PARAMETRO>>
-
-------------------------------------------------------------------------
--- Valor por funcao
-SELECT sf.nome, sum(d.valor)
-FROM diaria d
-INNER JOIN join acao a ON d.acao = a.codigo
-INNER JOIN join subfuncao sf ON sf.codigo = a.subfuncao
-GROUP BY sf.nome
-HAVING sum(d.valor) >= <<PARAMETRO>>
