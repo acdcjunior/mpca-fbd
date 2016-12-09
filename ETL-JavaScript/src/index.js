@@ -5,8 +5,10 @@ const dezipar = require('./dezipador');
 const baixar = require('./baixador');
 const acessarBD = require('./conexao-banco');
 
-const ano = 2015;
-const mes = 1;
+const ano = parseInt(process.argv[2]);
+const mes = parseInt(process.argv[3]);
+
+console.log(`Executando ETL para ano=${ano} e mes=${mes}...`);
 
 baixar(ano, mes, function (r) {
     dezipar(ano, mes);
