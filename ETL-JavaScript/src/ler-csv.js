@@ -11,15 +11,20 @@ function lerCSV(ano, mes) {
     let caminhoCompletoArquivoCsv = path.resolve(__dirname, '..', 'dados', `${ano}${mesString}_Diarias.csv`);
 
     const contents = readFileSync_encoding(caminhoCompletoArquivoCsv, 'ISO-8859-1');
-    const linhasComoString = contents.split('\r\n');
+    let linhasComoString = contents.split('\r\n');
 
     const primeiraLinha = linhasComoString.shift();
 
     linhasComoString.pop(); // remover linha sumario "Detalhamento das informações não disponível." + Total de valores
 
+    let diarias = linhasComoString.map(linhaString => new Diaria(linhaString));
+
+    // remover linha sumario "Detalhamento das informacoes na disponivel."
+    diarias = diarias.filter(diaria => diaria.doc.indexOf(`Detalhamento`) === -1);
+
     return {
         cabecalho: separarColunas(primeiraLinha),
-        diarias: linhasComoString.map(linhaString => new Diaria(linhaString))
+        diarias: diarias
     };
 }
 
