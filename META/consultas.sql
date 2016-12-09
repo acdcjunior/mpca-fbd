@@ -7,15 +7,13 @@ WHERE f.nome LIKE '%<<PARAMETRO>>%' or f.cpf LIKE '%<<PARAMETRO>>%'
 
 ------------------------------------------------------------------------
 -- Diarias por Orgao (UG/Orgao/Org.Sup)
-SELECT *
-FROM diaria d
-INNER JOIN unidade_gestora ug ON d.ug_pagadora = ug.codigo
-INNER JOIN orgao org ON ug.orgao = org.codigo
-INNER JOIN orgao orgsup ON org.orgao_sup = orgsup.codigo
+SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor)
+FROM vw_diarias d
 WHERE
-g.nome LIKE '%<<PARAMETRO>>%'
-or org.nome LIKE '%<<PARAMETRO>>%'
-or orgsup.nome LIKE '%<<PARAMETRO>>%'
+nm_unidade_gestora LIKE '%<<PARAMETRO>>%'
+or nm_orgao_subordinado LIKE '%<<PARAMETRO>>%'
+or nm_orgao_superior LIKE '%<<PARAMETRO>>%'
+GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior
 
 ------------------------------------------------------------------------
 -- Valor por programa
