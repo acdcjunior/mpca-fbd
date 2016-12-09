@@ -7,7 +7,7 @@
             tituloDaConsulta: 'Diárias por Favorecido',
             tituloDoInput: 'Nome ou CPF do Favorecido',
             buscaPlaceholder: 'Digite aqui o nome, CPF ou parte de um deles',
-            urlJson: "//mpca-fbd-acdcjunior.c9users.io:8081/diarias-por-favorecido?busca=",
+            urlJson: "//mpca-fbd-acdcjunior.c9users.io/diarias-por-favorecido?busca=",
             resultadoCabecalho: ['Documento', 'Data da Diária', 'Valor (R$)', 'Nome do Favorecido', 'CPF do Favorecido'],
             iterarCadaRegistro: function (resBody) {
                 return function (diaria) {
@@ -188,7 +188,7 @@
             $.getJSON(CONFIG.urlJson+$("#busca").val(), function (registros) {
                 let total = registros.length;
                 const LIMITE_DE_REGISTROS = 10000;
-                if (total == LIMITE_DE_REGISTROS) {
+                if (total >= LIMITE_DE_REGISTROS) {
                     infoAlemDoLimite.text("Mais de 10.000 registros encontrados. Incluindo abaixo somente 10.000.").show();
                 }
                 registros.forEach(CONFIG.iterarCadaRegistro(resultadoBody));
