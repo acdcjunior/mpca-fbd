@@ -6,10 +6,8 @@ mysql> drop database diarias;
 mysql> source ~/workspace/META/DDL/ddl.sql
 ```
 
-
 Aplicação:
-http://mpca-fbd-acdcjunior.c9users.io:8080/pages/index.html
+http://bit.do/fdb-20162
 
 Apresentação:
-
 http://slides.com/acdcjunior/fundamentos-de-banco-de-dados
