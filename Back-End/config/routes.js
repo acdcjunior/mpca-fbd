@@ -33,6 +33,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/diarias-por-favorecido': 'FavorecidoController.diariasPorFavorecido',
+  '/diarias-por-orgao': 'FavorecidoController.diariasPorOrgao',
+  '/valor-por-programa': 'FavorecidoController.valorPorPrograma',
+  '/valor-por-funcao': 'FavorecidoController.valorPorFuncao',
   '/': {
     view: 'homepage'
   }
