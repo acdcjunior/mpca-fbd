@@ -28,7 +28,7 @@ module.exports = {
     `
     SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
     FROM diaria d
-    INNER JOIN join favorecido f ON d.favorecido = f.cpf
+    INNER JOIN favorecido f ON d.favorecido = f.cpf
     WHERE f.nome LIKE '%<<PARAMETRO>>%' or f.cpf LIKE '%<<PARAMETRO>>%'
     `
   ),
@@ -37,9 +37,9 @@ module.exports = {
     `
     SELECT *
     FROM diaria d
-    INNER JOIN join unidade_gestora ug ON d.ug_pagadora = ug.codigo
-    INNER JOIN join orgao org ON ug.orgao = org.codigo
-    INNER JOIN join orgao orgsup ON org.orgao_sup = orgsup.codigo
+    INNER JOIN unidade_gestora ug ON d.ug_pagadora = ug.codigo
+    INNER JOIN orgao org ON ug.orgao = org.codigo
+    INNER JOIN orgao orgsup ON org.orgao_sup = orgsup.codigo
     WHERE
     g.nome LIKE '%<<PARAMETRO>>%'
     or org.nome LIKE '%<<PARAMETRO>>%'
@@ -51,8 +51,8 @@ module.exports = {
     `
     SELECT p.nome, sum(d.valor)
     FROM diaria d
-    INNER JOIN join acao a ON d.acao = a.codigo
-    INNER JOIN join programa p ON a.programa = p.codigo
+    INNER JOIN acao a ON d.acao = a.codigo
+    INNER JOIN programa p ON a.programa = p.codigo
     GROUP BY p.nome
     HAVING sum(d.valor) >= <<PARAMETRO>>
     `
@@ -62,9 +62,9 @@ module.exports = {
     `
     SELECT f.nome, sum(d.valor)
     FROM diaria d
-    INNER JOIN join acao a ON d.acao = a.codigo
-    INNER JOIN join subfuncao sf ON sf.codigo = a.subfuncao
-    INNER JOIN join funcao f ON f.codigo = sf.funcao
+    INNER JOIN acao a ON d.acao = a.codigo
+    INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao
+    INNER JOIN funcao f ON f.codigo = sf.funcao
     GROUP BY f.nome
     HAVING sum(d.valor) >= <<PARAMETRO>>
     `
