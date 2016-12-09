@@ -26,7 +26,7 @@ module.exports = {
   diariasPorFavorecido: consultar(
     'Diarias por favorecido',
     `
-    SELECT p.nome, sum(d.valor)
+    SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
     FROM diaria d
     INNER JOIN join favorecido f ON d.favorecido = f.cpf
     WHERE f.nome LIKE '%<<PARAMETRO>>%' or f.cpf LIKE '%<<PARAMETRO>>%'
