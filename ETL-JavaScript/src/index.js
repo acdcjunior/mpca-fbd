@@ -16,7 +16,7 @@ baixar(ano, mes, function (r) {
     // console.log(diarias);
 
     const bd = acessarBD();
-    // bd.inserirDiaria(diarias.diarias[0]);
+    bd.inserirDiaria(diarias.diarias[0]);
     console.log('Processando diarias...');
     diarias.diarias.forEach(bd.inserirDiaria);
     console.log('Enviadas! Aguardando banco...');
