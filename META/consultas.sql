@@ -11,9 +11,9 @@ SELECT *
 FROM diaria d
 INNER JOIN join unidade_gestora ug ON d.ug_pagadora = ug.codigo
 INNER JOIN join orgao org ON ug.orgao = org.codigo
-INNER JOIN join orgao orgsup sub ON org.orgao_sup = orgsup.codigo
+INNER JOIN join orgao orgsup ON org.orgao_sup = orgsup.codigo
 WHERE
- g.nome LIKE '%<<PARAMETRO>>%'
+g.nome LIKE '%<<PARAMETRO>>%'
 or org.nome LIKE '%<<PARAMETRO>>%'
 or orgsup.nome LIKE '%<<PARAMETRO>>%'
 
