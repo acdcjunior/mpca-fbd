@@ -7,7 +7,7 @@ WHERE f.nome LIKE '%<<PARAMETRO>>%' or f.cpf LIKE '%<<PARAMETRO>>%'
 
 ------------------------------------------------------------------------
 -- Diarias por Orgao (UG/Orgao/Org.Sup)
-SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor)
+SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
 FROM vw_diarias d
 WHERE
 nm_unidade_gestora LIKE '%<<PARAMETRO>>%'
@@ -17,7 +17,7 @@ GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior
 
 ------------------------------------------------------------------------
 -- Valor por programa
-SELECT p.nome, sum(d.valor)
+SELECT p.nome, sum(d.valor) as valor
 FROM diaria d
 INNER JOIN acao a ON d.acao = a.codigo
 INNER JOIN programa p ON a.programa = p.codigo
@@ -26,7 +26,7 @@ HAVING sum(d.valor) >= <<PARAMETRO>>
 
 ------------------------------------------------------------------------
 -- Valor por funcao
-SELECT f.nome, sum(d.valor)
+SELECT f.nome, sum(d.valor) as valor
 FROM diaria d
 INNER JOIN acao a ON d.acao = a.codigo
 INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao

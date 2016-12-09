@@ -35,7 +35,7 @@ module.exports = {
   diariasPorOrgao: consultar(
     'Diarias por Orgao',
     `
-    SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor)
+    SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
     FROM vw_diarias d
     WHERE
     nm_unidade_gestora LIKE '%<<PARAMETRO>>%'
@@ -47,7 +47,7 @@ module.exports = {
   valorPorPrograma: consultar(
     'Valor por Programa',
     `
-    SELECT p.nome, sum(d.valor)
+    SELECT p.nome, sum(d.valor) as valor
     FROM diaria d
     INNER JOIN acao a ON d.acao = a.codigo
     INNER JOIN programa p ON a.programa = p.codigo
@@ -58,7 +58,7 @@ module.exports = {
   valorPorFuncao: consultar(
     'Valor por Funcao',
     `
-    SELECT f.nome, sum(d.valor)
+    SELECT f.nome, sum(d.valor) as valor
     FROM diaria d
     INNER JOIN acao a ON d.acao = a.codigo
     INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao
