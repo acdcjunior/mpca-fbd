@@ -17,6 +17,6 @@ baixar(ano, mes, function (r) {
     // bd.inserirDiaria(diarias.diarias[0]);
     console.log('Processando diarias...');
     diarias.diarias.forEach(bd.inserirDiaria);
-    console.log('PRONTO!');
+    console.log('Enviadas! Aguardando banco...');
     bd.fecharConexao();
 });

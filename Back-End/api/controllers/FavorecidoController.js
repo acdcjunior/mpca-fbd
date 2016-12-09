@@ -30,6 +30,7 @@ module.exports = {
     FROM diaria d
     INNER JOIN favorecido f ON d.favorecido = f.cpf
     WHERE f.nome LIKE '%<<PARAMETRO>>%' or f.cpf LIKE '%<<PARAMETRO>>%'
+    LIMIT 10000
     `
   ),
   diariasPorOrgao: consultar(
