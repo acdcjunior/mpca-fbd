@@ -33,3 +33,11 @@ INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao
 INNER JOIN funcao f ON f.codigo = sf.funcao
 GROUP BY f.nome
 HAVING sum(d.valor) >= <<PARAMETRO>>
+
+
+------------------------------------------------------------------------
+-- Valor por Dia
+SELECT dt_diaria, sum(valor) as valor
+FROM diaria d
+GROUP BY dt_diaria
+ORDER BY dt_diaria
