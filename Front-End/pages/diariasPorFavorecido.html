@@ -187,10 +187,9 @@
             limparConsulta();
             $.getJSON(CONFIG.urlJson+$("#busca").val(), function (registros) {
                 let total = registros.length;
-                const LIMITE_DE_REGISTROS = 20000;
-                if (total > LIMITE_DE_REGISTROS) {
-                    infoAlemDoLimite.text("Mais de 20.000 registros encontrados. Incluindo abaixo somente 20.000.").show();
-                    registros = registros.slice(0, LIMITE_DE_REGISTROS);
+                const LIMITE_DE_REGISTROS = 10000;
+                if (total == LIMITE_DE_REGISTROS) {
+                    infoAlemDoLimite.text("Mais de 10.000 registros encontrados. Incluindo abaixo somente 10.000.").show();
                 }
                 registros.forEach(CONFIG.iterarCadaRegistro(resultadoBody));
                 ativarDataTable();
