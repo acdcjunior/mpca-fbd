@@ -1,6 +1,6 @@
 $(function() {
 
-    $.getJSON("//mpca-fbd-acdcjunior.c9users.io/valor-por-dia", function (registros) {
+    $.getJSON("//mpcafdbfinal-juniorjunior.rhcloud.com/valor-por-dia", function (registros) {
 
         registros.forEach(function (r) {
             r.period = r.dt_diaria.replace('T00:00:00.000Z', '');
