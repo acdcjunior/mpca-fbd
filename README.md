@@ -1,9 +1,14 @@
-Para executar o script sql:
-
+Criar esquema:
 ```
 $ mysql-ctl cli
 mysql> drop database diarias;
-mysql> source ~/workspace/META/DDL/ddl.sql
+mysql> source ~/caminho-repo/META/DDL/ddl.sql
+```
+
+ETL:
+```
+cd ETL-JavaScript
+npm start 2015 2
 ```
 
 Aplicação:
