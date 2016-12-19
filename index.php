@@ -12,7 +12,7 @@ $diariasRepo = new DiariasRepository();
 $app = new Slim\App();
 
 function returnAsJSON($response, $content) {
-    $response['Content-Type'] = 'application/json';
+    $response->headers->set('Content-Type', 'application/json');
     $response->body( json_encode($content) );
 };
 
