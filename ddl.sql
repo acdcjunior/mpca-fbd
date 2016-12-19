@@ -8,22 +8,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema diarias
+-- Schema u990873117_base
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `diarias` ;
+DROP SCHEMA IF EXISTS `u990873117_base` ;
 
 -- -----------------------------------------------------
--- Schema diarias
+-- Schema u990873117_base
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `diarias` DEFAULT CHARACTER SET utf8 ;
-USE `diarias` ;
+CREATE SCHEMA IF NOT EXISTS `u990873117_base` DEFAULT CHARACTER SET utf8 ;
+USE `u990873117_base` ;
 
 -- -----------------------------------------------------
--- Table `diarias`.`orgao`
+-- Table `u990873117_base`.`orgao`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`orgao` ;
+DROP TABLE IF EXISTS `u990873117_base`.`orgao` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`orgao` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`orgao` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   `orgao_sup` INT NULL,
@@ -31,18 +31,18 @@ CREATE TABLE IF NOT EXISTS `diarias`.`orgao` (
   INDEX `fk_orgao_sup_idx` (`orgao_sup` ASC),
   CONSTRAINT `fk_orgao_sup`
     FOREIGN KEY (`orgao_sup`)
-    REFERENCES `diarias`.`orgao` (`codigo`)
+    REFERENCES `u990873117_base`.`orgao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`funcao`
+-- Table `u990873117_base`.`funcao`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`funcao` ;
+DROP TABLE IF EXISTS `u990873117_base`.`funcao` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`funcao` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`funcao` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`codigo`))
@@ -50,11 +50,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`subfuncao`
+-- Table `u990873117_base`.`subfuncao`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`subfuncao` ;
+DROP TABLE IF EXISTS `u990873117_base`.`subfuncao` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`subfuncao` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`subfuncao` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   `funcao` INT NOT NULL,
@@ -62,18 +62,18 @@ CREATE TABLE IF NOT EXISTS `diarias`.`subfuncao` (
   INDEX `fk_funcao_idx` (`funcao` ASC),
   CONSTRAINT `fk_funcao`
     FOREIGN KEY (`funcao`)
-    REFERENCES `diarias`.`funcao` (`codigo`)
+    REFERENCES `u990873117_base`.`funcao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`programa`
+-- Table `u990873117_base`.`programa`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`programa` ;
+DROP TABLE IF EXISTS `u990873117_base`.`programa` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`programa` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`programa` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`codigo`))
@@ -81,11 +81,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`acao`
+-- Table `u990873117_base`.`acao`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`acao` ;
+DROP TABLE IF EXISTS `u990873117_base`.`acao` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`acao` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`acao` (
   `codigo` VARCHAR(200) NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   `linguagem_cidada` VARCHAR(200) NULL,
@@ -96,23 +96,23 @@ CREATE TABLE IF NOT EXISTS `diarias`.`acao` (
   INDEX `fk_subfuncao_idx` (`subfuncao` ASC),
   CONSTRAINT `fk_programa`
     FOREIGN KEY (`programa`)
-    REFERENCES `diarias`.`programa` (`codigo`)
+    REFERENCES `u990873117_base`.`programa` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_subfuncao`
     FOREIGN KEY (`subfuncao`)
-    REFERENCES `diarias`.`subfuncao` (`codigo`)
+    REFERENCES `u990873117_base`.`subfuncao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`unidade_gestora`
+-- Table `u990873117_base`.`unidade_gestora`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`unidade_gestora` ;
+DROP TABLE IF EXISTS `u990873117_base`.`unidade_gestora` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`unidade_gestora` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`unidade_gestora` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   `orgao` INT NOT NULL,
@@ -120,18 +120,18 @@ CREATE TABLE IF NOT EXISTS `diarias`.`unidade_gestora` (
   INDEX `fk_orgao_idx` (`orgao` ASC),
   CONSTRAINT `fk_orgao`
     FOREIGN KEY (`orgao`)
-    REFERENCES `diarias`.`orgao` (`codigo`)
+    REFERENCES `u990873117_base`.`orgao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`favorecido`
+-- Table `u990873117_base`.`favorecido`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`favorecido` ;
+DROP TABLE IF EXISTS `u990873117_base`.`favorecido` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`favorecido` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`favorecido` (
   `nome` VARCHAR(200) NOT NULL,
   `cpf` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`cpf`))
@@ -139,11 +139,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`diaria`
+-- Table `u990873117_base`.`diaria`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`diaria` ;
+DROP TABLE IF EXISTS `u990873117_base`.`diaria` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`diaria` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`diaria` (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `documento` VARCHAR(15) NOT NULL,
   `gestao` VARCHAR(10) NOT NULL,
@@ -158,50 +158,50 @@ CREATE TABLE IF NOT EXISTS `diarias`.`diaria` (
   INDEX `fk_favorecido_idx` (`favorecido` ASC),
   CONSTRAINT `fk_diaria_ug_pagadora`
     FOREIGN KEY (`ug_pagadora`)
-    REFERENCES `diarias`.`unidade_gestora` (`codigo`)
+    REFERENCES `u990873117_base`.`unidade_gestora` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_acao`
     FOREIGN KEY (`acao`)
-    REFERENCES `diarias`.`acao` (`codigo`)
+    REFERENCES `u990873117_base`.`acao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_favorecido`
     FOREIGN KEY (`favorecido`)
-    REFERENCES `diarias`.`favorecido` (`cpf`)
+    REFERENCES `u990873117_base`.`favorecido` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `diarias`.`log`
+-- Table `u990873117_base`.`log`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `diarias`.`log` ;
+DROP TABLE IF EXISTS `u990873117_base`.`log` ;
 
-CREATE TABLE IF NOT EXISTS `diarias`.`log` (
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`log` (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `data` DATETIME NOT NULL,
   `operacao` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`codigo`))
 ENGINE = InnoDB;
 
-USE `diarias` ;
+USE `u990873117_base` ;
 
 -- -----------------------------------------------------
--- Placeholder table for view `diarias`.`vw_diarias`
+-- Placeholder table for view `u990873117_base`.`vw_diarias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `diarias`.`vw_diarias` (`cd_orgao_superior` INT, `nm_orgao_superior` INT, `cd_orgao_subordinado` INT, `nm_orgao_subordinado` INT, `cd_unidade_gestora` INT, `nm_unidade_gestora` INT, `cd_funcao` INT, `nm_funcao` INT, `cd_subfuncao` INT, `nm_subfuncao` INT, `cd_programa` INT, `nm_programa` INT, `cd_acao` INT, `nm_acao` INT, `linguagem_cidada` INT, `cpf_favorecido` INT, `nm_favorecido` INT, `documento` INT, `gestao` INT, `dt_diaria` INT, `valor` INT);
+CREATE TABLE IF NOT EXISTS `u990873117_base`.`vw_diarias` (`cd_orgao_superior` INT, `nm_orgao_superior` INT, `cd_orgao_subordinado` INT, `nm_orgao_subordinado` INT, `cd_unidade_gestora` INT, `nm_unidade_gestora` INT, `cd_funcao` INT, `nm_funcao` INT, `cd_subfuncao` INT, `nm_subfuncao` INT, `cd_programa` INT, `nm_programa` INT, `cd_acao` INT, `nm_acao` INT, `linguagem_cidada` INT, `cpf_favorecido` INT, `nm_favorecido` INT, `documento` INT, `gestao` INT, `dt_diaria` INT, `valor` INT);
 
 -- -----------------------------------------------------
 -- procedure inserir_orgao_subordinado
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_orgao_subordinado`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_orgao_subordinado`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_orgao_subordinado (IN cod INT, IN nm VARCHAR(200), IN cd_org_sup INT)
 BEGIN
 	declare cd INT;
@@ -217,11 +217,11 @@ DELIMITER ;
 -- procedure inserir_orgao_superior
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_orgao_superior`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_orgao_superior`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_orgao_superior (IN cod INT, IN nm VARCHAR(200))
 BEGIN
 	declare cd INT;
@@ -237,11 +237,11 @@ DELIMITER ;
 -- procedure inserir_funcao
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_funcao`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_funcao`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_funcao (IN cod INT, IN nm VARCHAR(200))
 BEGIN
 	declare cd INT;
@@ -257,11 +257,11 @@ DELIMITER ;
 -- procedure inserir_unidade_gestora
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_unidade_gestora`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_unidade_gestora`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_unidade_gestora (IN cod INT, IN nm VARCHAR(200), IN cd_orgao INT)
 BEGIN
 	declare cd INT;
@@ -277,11 +277,11 @@ DELIMITER ;
 -- procedure inserir_subfuncao
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_subfuncao`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_subfuncao`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_subfuncao (IN cod INT, IN nm VARCHAR(200), IN cd_funcao INT)
 BEGIN
 	declare cd INT;
@@ -297,11 +297,11 @@ DELIMITER ;
 -- procedure inserir_linguagem_cidada
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_linguagem_cidada`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_linguagem_cidada`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_linguagem_cidada (INOUT cod INT, IN nm VARCHAR(200))
 BEGIN
 	SELECT codigo INTO cod FROM linguagem_cidada where descricao = nm;
@@ -317,11 +317,11 @@ DELIMITER ;
 -- procedure inserir_acao
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_acao`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_acao`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_acao (IN cod INT, IN nm VARCHAR(200), IN lng_cidada VARCHAR(200), IN cd_programa INT, IN cd_subfuncao INT)
 BEGIN
 	declare cd INT;
@@ -337,11 +337,11 @@ DELIMITER ;
 -- procedure inserir_programa
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_programa`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_programa`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_programa (IN cod INT, IN nm VARCHAR(200))
 BEGIN
 	declare cd INT;
@@ -357,11 +357,11 @@ DELIMITER ;
 -- procedure inserir_favorecido
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_favorecido`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_favorecido`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_favorecido (IN nm VARCHAR(300), IN cpf_fav VARCHAR(11))
 BEGIN
 	declare cp VARCHAR(11);
@@ -377,11 +377,11 @@ DELIMITER ;
 -- procedure inserir_diaria
 -- -----------------------------------------------------
 
-USE `diarias`;
-DROP procedure IF EXISTS `diarias`.`inserir_diaria`;
+USE `u990873117_base`;
+DROP procedure IF EXISTS `u990873117_base`.`inserir_diaria`;
 
 DELIMITER $$
-USE `diarias`$$
+USE `u990873117_base`$$
 CREATE PROCEDURE inserir_diaria (
 	IN cd_org_sup INT, IN nm_org_sup VARCHAR(200),
     IN cd_org_sub INT, IN nm_org_sub VARCHAR(200),
@@ -419,11 +419,11 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- View `diarias`.`vw_diarias`
+-- View `u990873117_base`.`vw_diarias`
 -- -----------------------------------------------------
-DROP VIEW IF EXISTS `diarias`.`vw_diarias` ;
-DROP TABLE IF EXISTS `diarias`.`vw_diarias`;
-USE `diarias`;
+DROP VIEW IF EXISTS `u990873117_base`.`vw_diarias` ;
+DROP TABLE IF EXISTS `u990873117_base`.`vw_diarias`;
+USE `u990873117_base`;
 create  OR REPLACE view vw_diarias as
 select 
 	osup.codigo cd_orgao_superior, osup.nome nm_orgao_superior,
@@ -445,14 +445,14 @@ from diaria d
     join subfuncao sf on a.subfuncao = sf.codigo
     join funcao fun on sf.funcao = fun.codigo
     ;
-USE `diarias`;
+USE `u990873117_base`;
 
 DELIMITER $$
 
-USE `diarias`$$
-DROP TRIGGER IF EXISTS `diarias`.`diaria_AFTER_INSERT` $$
-USE `diarias`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `diarias`.`diaria_AFTER_INSERT` AFTER INSERT ON `diaria` FOR EACH ROW
+USE `u990873117_base`$$
+DROP TRIGGER IF EXISTS `u990873117_base`.`diaria_AFTER_INSERT` $$
+USE `u990873117_base`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `u990873117_base`.`diaria_AFTER_INSERT` AFTER INSERT ON `diaria` FOR EACH ROW
 BEGIN
     if new.valor >= 500 then
         insert into log(data, operacao) values (now(), concat('Nova diária de alto valor - documento: ', new.documento));
