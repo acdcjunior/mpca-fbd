@@ -11,17 +11,14 @@ $diariasRepo = new DiariasRepository();
 
 $app = new Slim\App();
 
-function returnAsJSON($content) {
-    global $app;
-
-    $response = $app->response;
+function returnAsJSON($response, $content) {
     $response['Content-Type'] = 'application/json';
     $response->body( json_encode($content) );
 };
 
 $app->get('/diarias-por-favorecido', function ($request, $response, $args) {
     global $diariasRepo;
-    returnAsJSON($diariasRepo->diariasPorFavorecido('joao'));
+    returnAsJSON($response, $diariasRepo->diariasPorFavorecido('joao'));
 });
 
 $app->run();
