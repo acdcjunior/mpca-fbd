@@ -26,7 +26,7 @@ class DiariasRepository {
     LIMIT 10000
 EOT;
         if ($stmt = $this->mysqli->prepare($sql)) {
-            $stmt->bind_param("s", $parametro);
+            $stmt->bind_param("ss", $parametro, $parametro);
             $stmt->execute();
 
             $arr = array();
