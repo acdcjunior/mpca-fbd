@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`orgao` (
     REFERENCES `u990873117_base`.`orgao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`funcao` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`codigo`))
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`subfuncao` (
     REFERENCES `u990873117_base`.`funcao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`programa` (
   `codigo` INT NOT NULL,
   `nome` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`codigo`))
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`acao` (
     REFERENCES `u990873117_base`.`subfuncao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`unidade_gestora` (
     REFERENCES `u990873117_base`.`orgao` (`codigo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`favorecido` (
   `nome` VARCHAR(200) NOT NULL,
   `cpf` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`cpf`))
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`diaria` (
     REFERENCES `u990873117_base`.`favorecido` (`cpf`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+;
 
 
 -- -----------------------------------------------------
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `u990873117_base`.`log` (
   `data` DATETIME NOT NULL,
   `operacao` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`codigo`))
-ENGINE = InnoDB;
+;
 
 USE `u990873117_base` ;
 
