@@ -19,4 +19,6 @@ $rows = array();
 while($r = mysqli_fetch_assoc($sth)) {
     $rows[] = $r;
 }
-print json_encode($rows);
+$outtt = json_encode($rows);
+
+print $outtt;
