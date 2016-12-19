@@ -1,9 +1,9 @@
 # Do not remove this line or mod_rewrite rules and search engine friendly URLs will stop working
 RewriteBase /
 
-<IfModule mod_rewrite.c>
-    RewriteEngine   On
-    RewriteCond     %{REQUEST_FILENAME} !-d
-    RewriteCond     %{REQUEST_FILENAME} !-f
-    RewriteRule     ^(.*)$ index.php/$1 [L,QSA]
-</IfModule>
+#<IfModule mod_rewrite.c>
+#    RewriteEngine   On
+#    RewriteCond     %{REQUEST_FILENAME} !-d
+#    RewriteCond     %{REQUEST_FILENAME} !-f
+#    RewriteRule     ^(.*)$ index.php/$1 [L,QSA]
+#</IfModule>
