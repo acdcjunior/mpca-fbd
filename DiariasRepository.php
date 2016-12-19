@@ -29,11 +29,14 @@ EOT;
 //            $stmt->bind_param("ss", $parametro, $parametro);
             $stmt->execute();
 
+            $result = $stmt->get_result();
+
             $arr = array();
-            $stmt->bind_result($id);
-            while ( $stmt->fetch() ) {
+            while ($row = $result->fetch_assoc()) {
                 $arr[] = $id;
             }
+
+            $stmt->free_result();
             $stmt->close();
             return $arr;
         } else {
