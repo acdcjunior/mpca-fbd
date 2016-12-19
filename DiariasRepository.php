@@ -22,11 +22,11 @@ class DiariasRepository {
     SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
     FROM diaria d
     INNER JOIN favorecido f ON d.favorecido = f.cpf
-    WHERE f.nome LIKE '%?%' or f.cpf LIKE '%?%'
+    WHERE f.nome LIKE '%joao%' or f.cpf LIKE '%joao%'
     LIMIT 10000
 EOT;
         if ($stmt = $this->mysqli->prepare($sql)) {
-            $stmt->bind_param("ss", $parametro, $parametro);
+//            $stmt->bind_param("ss", $parametro, $parametro);
             $stmt->execute();
 
             $arr = array();
