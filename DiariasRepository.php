@@ -1,30 +1,50 @@
 <?php
-require 'vendor/autoload.php';
+
+class DiariasRepository {
+
+    function DiariasRepository()
+    {
+        $this->mysqli = new mysqli("mysql.hostinger.com.br","u990873117_user","maristela",'u990873117_base');
+        if (mysqli_connect_errno()) {
+            printf("Connect failed: %s\n", mysqli_connect_error());
+            exit();
+        }
+    }
+
+    function close()
+    {
+        $this->mysqli->close();
+    }
+
+    function diariasPorFavorecido($parametro)
+    {
+        $sql = <<<EOT
+    SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
+    FROM diaria d
+    INNER JOIN favorecido f ON d.favorecido = f.cpf
+    WHERE f.nome LIKE '%?%' or f.cpf LIKE '%?%'
+    LIMIT 10000
+EOT;
+        if ($stmt = $this->mysqli->prepare($sql)) {
+            $stmt->bind_param("s", $parametro);
+            $stmt->execute();
+
+            $arr = array();
+            $stmt->bind_result($id);
+            while ( $stmt->fetch() ) {
+                $arr[] = $id;
+            }
+            $stmt->close();
+            return $arr;
+        } else {
+            printf("PAU NA CONSULTA!");
+            exit();
+        }
+    }
+
+}
 
 
-require "DiariasRepository.php";
-$diariasRepo = new DiariasRepository();
-
-
-
-
-
-$app = new Slim\App();
-
-function returnAsJSON($content) {
-    global $app;
-
-    $response = $app->response;
-    $response['Content-Type'] = 'application/json';
-    $response->body( json_encode($content) );
-};
-
-$app->get('/diarias-por-favorecido', function ($request, $response, $args) {
-    global $diariasRepo;
-    returnAsJSON($diariasRepo->diariasPorFavorecido('joao'));
-});
-
-$app->run();
 
 /*
   diariasPorOrgao: consultar(
@@ -70,4 +90,5 @@ $app->run();
     GROUP BY dt_diaria
     ORDER BY dt_diaria
     `
-*/
+
+}
