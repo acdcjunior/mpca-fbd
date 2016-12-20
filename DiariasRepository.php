@@ -107,12 +107,9 @@ class DiariasRepository {
         return $this->sql(
             "SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
              FROM vw_diarias d
-             WHERE
-             nm_unidade_gestora LIKE CONCAT('%',?,'%')
-             or nm_orgao_subordinado LIKE CONCAT('%',?,'%')
-             or nm_orgao_superior LIKE CONCAT('%',?,'%')
              GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior",
-            array($parametro, $parametro, $parametro)
+//            array($parametro, $parametro, $parametro)
+            array()
         );
     }
 
