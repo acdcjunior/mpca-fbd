@@ -94,7 +94,10 @@ class DiariasRepository {
     function diariasPorFavorecido($parametro)
     {
         return $this->sql(
-            "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000",
+            "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf
+             FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf
+             WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%')
+             LIMIT 10000",
             array($parametro, $parametro)
         );
     }
