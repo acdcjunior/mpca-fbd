@@ -61,7 +61,7 @@ class DiariasRepository {
     function diariasPorFavorecido($parametro)
     {
         $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000";
-        $params = array("ss", $parametro, $parametro);
+        $params = array($parametro, $parametro);
 //        $params = array("ss", "joao", "joao");
 
         $types = '';
