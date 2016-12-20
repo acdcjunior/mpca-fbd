@@ -77,37 +77,26 @@ class DiariasRepository {
         $this->mysqli->close();
     }
 
-    function diariasPorFavorecido($parametro)
+    function sql($sql, $params)
     {
-        $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000";
-        $params = array($parametro, $parametro);
-
-
-
         if ($stmt = $this->mysqli->prepare($sql)) {
-
             setParams($stmt, $params);
-
             $stmt->execute();
-
             $results = getResults($stmt);
-//            $arr = array();
-//            $stmt->bind_result($documento, $dt_diaria, $valor, $nome, $cpf);
-//            while ( $stmt->fetch() ) {
-//                $obj = new stdClass;
-//                $obj->documento = $documento;
-//                $obj->dt_diaria = $dt_diaria;
-//                $obj->valor = $valor;
-//                $obj->nome = $nome;
-//                $obj->cpf = $cpf;
-//                $arr[] = $obj;
-//            }
             $stmt->close();
             return $results;
         } else {
             printf("PAU NA CONSULTA!");
             exit();
         }
+    }
+
+    function diariasPorFavorecido($parametro)
+    {
+        return $this->sql(
+            "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000",
+            array($parametro, $parametro)
+        );
     }
 
 }
