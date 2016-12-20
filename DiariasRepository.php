@@ -1,5 +1,36 @@
 <?php
 
+function getResults($stmt) {
+    // http://stackoverflow.com/a/12632827/1850609
+    // http://stackoverflow.com/a/6241477/1850609
+
+    // initialise some empty arrays
+    $fields = $results = array();
+
+    // Get metadata for field names
+    $meta = $stmt->result_metadata();
+
+    // This is the tricky bit dynamically creating an array of variables to use to bind the results
+    while ($field = $meta->fetch_field()) {
+        $var = $field->name;
+        $$var = null;
+        $fields[$var] = &$$var;
+    }
+
+    // Bind Results
+    call_user_func_array(array($stmt,'bind_result'),$fields);
+
+    // Fetch Results
+    $i = 0;
+    while ($stmt->fetch()) {
+        $results[$i] = array();
+        foreach($fields as $k => $v)
+            $results[$i][$k] = $v;
+        $i++;
+    }
+    return $results;
+}
+
 class DiariasRepository {
 
     function DiariasRepository()
@@ -18,26 +49,26 @@ class DiariasRepository {
 
     function diariasPorFavorecido($parametro)
     {
-//        $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE '%?%' or f.cpf LIKE '%?%' LIMIT 10000";
         $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000";
 
         if ($stmt = $this->mysqli->prepare($sql)) {
             $stmt->bind_param("ss", $parametro, $parametro);
             $stmt->execute();
 
-            $arr = array();
-            $stmt->bind_result($documento, $dt_diaria, $valor, $nome, $cpf);
-            while ( $stmt->fetch() ) {
-                $obj = new stdClass;
-                $obj->documento = $documento;
-                $obj->dt_diaria = $dt_diaria;
-                $obj->valor = $valor;
-                $obj->nome = $nome;
-                $obj->cpf = $cpf;
-                $arr[] = $obj;
-            }
+            $results = getResults($stmt);
+//            $arr = array();
+//            $stmt->bind_result($documento, $dt_diaria, $valor, $nome, $cpf);
+//            while ( $stmt->fetch() ) {
+//                $obj = new stdClass;
+//                $obj->documento = $documento;
+//                $obj->dt_diaria = $dt_diaria;
+//                $obj->valor = $valor;
+//                $obj->nome = $nome;
+//                $obj->cpf = $cpf;
+//                $arr[] = $obj;
+//            }
             $stmt->close();
-            return $arr;
+            return $results;
         } else {
             printf("PAU NA CONSULTA!");
             exit();
