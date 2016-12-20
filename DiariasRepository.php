@@ -108,8 +108,8 @@ class DiariasRepository {
     function diariasPorOrgao($parametro)
     {
         return $this->sql(
-            "SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior
-             FROM vw_diarias d
+            "SELECT *
+             FROM vw_diarias
             ",
             array()
         );
