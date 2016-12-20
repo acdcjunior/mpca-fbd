@@ -102,34 +102,38 @@ class DiariasRepository {
         );
     }
 
+    function diariasPorOrgao($parametro)
+    {
+        return $this->sql(
+            "SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
+             FROM vw_diarias d
+             WHERE
+             nm_unidade_gestora LIKE CONCAT('%',?,'%')
+             or nm_orgao_subordinado LIKE CONCAT('%',?,'%')
+             or nm_orgao_superior LIKE CONCAT('%',?,'%')
+             GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior",
+            array($parametro, $parametro, $parametro)
+        );
+    }
+
+    function valorPorPrograma($parametro)
+    {
+        return $this->sql(
+            "SELECT p.nome, sum(d.valor) as valor
+             FROM diaria d
+             INNER JOIN acao a ON d.acao = a.codigo
+             INNER JOIN programa p ON a.programa = p.codigo
+             GROUP BY p.nome
+             HAVING sum(d.valor) >= ?",
+            array($parametro)
+        );
+    }
+
 }
 
 
 
 /*
-  diariasPorOrgao: consultar(
-    'Diarias por Orgao',
-    `
-    SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
-    FROM vw_diarias d
-    WHERE
-    nm_unidade_gestora LIKE '%<<PARAMETRO>>%'
-    or nm_orgao_subordinado LIKE '%<<PARAMETRO>>%'
-    or nm_orgao_superior LIKE '%<<PARAMETRO>>%'
-    GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior
-    `
-),
-  valorPorPrograma: consultar(
-    'Valor por Programa',
-    `
-    SELECT p.nome, sum(d.valor) as valor
-    FROM diaria d
-    INNER JOIN acao a ON d.acao = a.codigo
-    INNER JOIN programa p ON a.programa = p.codigo
-    GROUP BY p.nome
-    HAVING sum(d.valor) >= <<PARAMETRO>>
-    `
-),
   valorPorFuncao: consultar(
     'Valor por Funcao',
     `

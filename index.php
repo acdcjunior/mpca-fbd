@@ -19,10 +19,17 @@ $app->add(function ($req, $res, $next) {
 });
 /* CORS - FIM */
 
-
 $app->get('/diarias-por-favorecido', function ($request, $response) {
     global $diariasRepo;
     return $response->withStatus(200)->withJson($diariasRepo->diariasPorFavorecido($request->getQueryParam('busca', '')));
+});
+$app->get('/diarias-por-orgao', function ($request, $response) {
+    global $diariasRepo;
+    return $response->withStatus(200)->withJson($diariasRepo->diariasPorOrgao($request->getQueryParam('busca', '')));
+});
+$app->get('/valor-por-programa', function ($request, $response) {
+    global $diariasRepo;
+    return $response->withStatus(200)->withJson($diariasRepo->valorPorPrograma($request->getQueryParam('busca', '')));
 });
 
 $app->run();
