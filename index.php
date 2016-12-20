@@ -14,7 +14,7 @@ $app = new Slim\App();
 
 $app->get('/diarias-por-favorecido', function ($request, $response) {
     global $diariasRepo;
-    return $response->withStatus(200)->withJson($diariasRepo->diariasPorFavorecido($request->getQueryParam('busca')));
+    return $response->withStatus(200)->withJson($diariasRepo->diariasPorFavorecido($request->getQueryParam('busca', '')));
 });
 
 $app->run();
