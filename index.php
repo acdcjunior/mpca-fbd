@@ -31,5 +31,13 @@ $app->get('/valor-por-programa', function ($request, $response) {
     global $diariasRepo;
     return $response->withStatus(200)->withJson($diariasRepo->valorPorPrograma($request->getQueryParam('busca', '')));
 });
+$app->get('/valor-por-funcao', function ($request, $response) {
+    global $diariasRepo;
+    return $response->withStatus(200)->withJson($diariasRepo->valorPorFuncao($request->getQueryParam('busca', '')));
+});
+$app->get('/valor-por-dia', function ($request, $response) {
+    global $diariasRepo;
+    return $response->withStatus(200)->withJson($diariasRepo->valorPorDia($request->getQueryParam('busca', '')));
+});
 
 $app->run();

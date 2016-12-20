@@ -151,31 +151,29 @@ from diaria d
         );
     }
 
+    function valorPorFuncao($parametro)
+    {
+        return $this->sql(
+            "SELECT f.nome, sum(d.valor) as valor
+             FROM diaria d
+             INNER JOIN acao a ON d.acao = a.codigo
+             INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao
+             INNER JOIN funcao f ON f.codigo = sf.funcao
+             GROUP BY f.nome
+             HAVING sum(d.valor) >= ?",
+            array($parametro)
+        );
+    }
+
+    function valorPorDia($parametro)
+    {
+        return $this->sql(
+            "SELECT dt_diaria, sum(valor) as valor
+             FROM diaria d
+             GROUP BY dt_diaria
+             ORDER BY dt_diaria",
+            array()
+        );
+    }
+
 }
-
-
-
-/*
-  valorPorFuncao: consultar(
-    'Valor por Funcao',
-    `
-    SELECT f.nome, sum(d.valor) as valor
-    FROM diaria d
-    INNER JOIN acao a ON d.acao = a.codigo
-    INNER JOIN subfuncao sf ON sf.codigo = a.subfuncao
-    INNER JOIN funcao f ON f.codigo = sf.funcao
-    GROUP BY f.nome
-    HAVING sum(d.valor) >= <<PARAMETRO>>
-    `
-),
-  valorPorDia: consultar(
-    'Valor por Dia',
-    `
-    SELECT dt_diaria, sum(valor) as valor
-    FROM diaria d
-    GROUP BY dt_diaria
-    ORDER BY dt_diaria
-    `
-
-}
-*/
