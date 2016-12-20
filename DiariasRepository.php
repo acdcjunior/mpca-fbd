@@ -32,6 +32,9 @@ function getResults($stmt) {
 }
 
 function setParams($stmt, $params) {
+    if (sizeof($params) < 1) {
+        return;
+    }
     $types = '';
     foreach($params as $param) {
         if(is_int($param)) {
