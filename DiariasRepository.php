@@ -108,10 +108,33 @@ class DiariasRepository {
     function diariasPorOrgao($parametro)
     {
         return $this->sql(
-            "SELECT *
-             FROM vw_diarias
-            ",
-            array()
+            "SELECT nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior, sum(d.valor) as valor
+             FROM (select 
+	osup.codigo cd_orgao_superior, osup.nome nm_orgao_superior,
+    osub.codigo cd_orgao_subordinado, osub.nome nm_orgao_subordinado,
+    ug.codigo cd_unidade_gestora, ug.nome nm_unidade_gestora,
+    fun.codigo cd_funcao, fun.nome nm_funcao,
+    sf.codigo cd_subfuncao, sf.nome nm_subfuncao,
+    p.codigo cd_programa, p.nome nm_programa,
+    a.codigo cd_acao, a.nome nm_acao, a.linguagem_cidada linguagem_cidada,
+    f.cpf cpf_favorecido, f.nome nm_favorecido,
+	d.documento, d.gestao, d.dt_diaria, d.valor
+from diaria d 
+	join favorecido f on d.favorecido = f.cpf
+    join unidade_gestora ug on d.ug_pagadora = ug.codigo
+    join orgao osub on ug.orgao = osub.codigo
+    join orgao osup on osub.orgao_sup = osup.codigo
+    join acao a on d.acao = a.codigo
+    join programa p on a.programa = p.codigo
+    join subfuncao sf on a.subfuncao = sf.codigo
+    join funcao fun on sf.funcao = fun.codigo
+    ) d
+             WHERE
+             nm_unidade_gestora LIKE CONCAT('%',?,'%')
+             or nm_orgao_subordinado LIKE CONCAT('%',?,'%')
+             or nm_orgao_superior LIKE CONCAT('%',?,'%')
+             GROUP BY  nm_unidade_gestora, nm_orgao_subordinado, nm_orgao_superior",
+            array($parametro, $parametro, $parametro)
         );
     }
 
