@@ -31,6 +31,17 @@ function getResults($stmt) {
     return $results;
 }
 
+function refValues($arr){
+    if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
+    {
+        $refs = array();
+        foreach($arr as $key => $value)
+            $refs[$key] = &$arr[$key];
+        return $refs;
+    }
+    return $arr;
+}
+
 class DiariasRepository {
 
     function DiariasRepository()
@@ -50,8 +61,8 @@ class DiariasRepository {
     function diariasPorFavorecido($parametro)
     {
         $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000";
-//        $params = array("ss", $parametro, $parametro);
-        $params = array("ss", "joao", "joao");
+        $params = array("ss", $parametro, $parametro);
+//        $params = array("ss", "joao", "joao");
 
         $types = '';
         foreach($params as $param) {
@@ -65,11 +76,12 @@ class DiariasRepository {
                 $types .= 'b';              //blob and unknown
             }
         }
-//        array_unshift($params, $types);
+        array_unshift($params, $types);
 
         if ($stmt = $this->mysqli->prepare($sql)) {
 
-            call_user_func_array(array($stmt,'bind_param'),$params);
+            call_user_func_array(array($stmt,'bind_param'), refValues($params));
+//            $stmt->bind_param("ss", $parametro, $parametro);
 
             $stmt->execute();
 
