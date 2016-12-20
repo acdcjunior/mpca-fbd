@@ -6,17 +6,12 @@ $app = new Slim\App();
 $diariasRepo = new DiariasRepository();
 
 /* CORS - INICIO */
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-    return $response;
-});
-
-$app->add(function ($req, $res, $next) {
-    $response = $next($req, $res);
-    return $response
-        ->withHeader('Access-Control-Allow-Origin', 'http://acdcjunior.github.io, http://localhost:63344')
-        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-});
+$corsOptions = array(
+    "origin" => "*",
+    "exposeHeaders" => array("Content-Type", "X-Requested-With", "X-authentication", "X-client"),
+    "allowMethods" => array('GET', 'POST', 'PUT', 'DELETE', 'OPTIONS')
+);
+$cors = new \CorsSlim\CorsSlim($corsOptions);
 /* CORS - FIM */
 
 $app->get('/diarias-por-favorecido', function ($request, $response) {
