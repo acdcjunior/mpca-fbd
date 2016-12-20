@@ -66,11 +66,7 @@ class DiariasRepository {
         }
         array_unshift($params, $types);
 
-        // Start stmt
-        $stmt = $this->mysqli->stmt_init();
-        if($stmt->prepare($sql)) {
-
-//        if ($stmt = $this->mysqli->prepare($sql)) {
+        if ($stmt = $this->mysqli->prepare($sql)) {
 
             call_user_func_array(array($stmt,'bind_param'),$params);
 
