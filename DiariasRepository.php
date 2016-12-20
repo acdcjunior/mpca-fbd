@@ -52,7 +52,25 @@ class DiariasRepository {
         $sql = "SELECT d.documento, d.dt_diaria, d.valor, f.nome, f.cpf FROM diaria d INNER JOIN favorecido f ON d.favorecido = f.cpf WHERE f.nome LIKE CONCAT('%',?,'%') or f.cpf LIKE CONCAT('%',?,'%') LIMIT 10000";
         $params = array($parametro, $parametro);
 
-        if ($stmt = $this->mysqli->prepare($sql)) {
+        $types = '';
+        foreach($params as $param) {
+            if(is_int($param)) {
+                $types .= 'i';              //integer
+            } elseif (is_float($param)) {
+                $types .= 'd';              //double
+            } elseif (is_string($param)) {
+                $types .= 's';              //string
+            } else {
+                $types .= 'b';              //blob and unknown
+            }
+        }
+        array_unshift($params, $types);
+
+        // Start stmt
+        $stmt = $this->mysqli->stmt_init();
+        if($stmt->prepare($sql)) {
+
+//        if ($stmt = $this->mysqli->prepare($sql)) {
 
             call_user_func_array(array($stmt,'bind_param'),$params);
 
