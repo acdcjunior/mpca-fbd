@@ -68,7 +68,7 @@ class DiariasRepository {
 
     function DiariasRepository()
     {
-        $this->mysqli = new mysqli("mysql.hostinger.com.br","u990873117_user","maristela",'u990873117_base');
+        $this->mysqli = new mysqli("mysql.hostinger.com.br","u347178416_user","maristela",'u347178416_base');
         if (mysqli_connect_errno()) {
             printf("Connect failed: %s\n", mysqli_connect_error());
             exit();
